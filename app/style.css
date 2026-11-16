@@ -1,0 +1,81 @@
+/* style.css */
+/* Paper background and ink text */
+html {
+  background: #faf7f0;
+  color: #1a1a1a;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+header {
+  border-bottom: 1px solid #ccc;
+}
+
+/* Board layout: title flexible, then pot, fee, countdown, entries */
+.board {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.board .title {
+  flex: 1;
+}
+
+.board .pot,
+.board .fee,
+.board .countdown,
+.board .entries {
+  /* placeholder for specific styles */
+}
+
+/* Amber accent for money and deadlines */
+.money,
+.deadline {
+  color: #b45309;
+}
+
+a {
+  color: #0b5cad;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table th,
+ table td {
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+}
+
+button {
+  border: 1px solid #1a1a1a;
+  background: none;
+  padding: 0.5rem 1rem;
+}
+
+button:focus-visible {
+  outline: 2px solid #b45309;
+}
+
+/* Responsive single-column layout under 640px */
+@media (max-width: 640px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reduce motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+  }
+}
