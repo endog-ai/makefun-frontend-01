@@ -40,7 +40,7 @@ async function renderBoard() {
     }
     setReady(true);
     document.title = 'Bounties';
-    board(appEl, boardCache);
+    appEl.innerHTML = board({ items: boardCache });
     wireBoardControls();
   } catch (e) {
     showError(e.message, renderBoard);
@@ -76,7 +76,7 @@ function wireBoardControls() {
         currentCursor = data.nextCursor || null;
         boardCache = data.items;
         setReady(true);
-        board(appEl, boardCache);
+        appEl.innerHTML = board({ items: boardCache });
         wireBoardControls();
       } catch (e) {
         showError(e.message, renderBoard);
@@ -93,7 +93,7 @@ function wireBoardControls() {
         currentCursor = prevCursor;
         boardCache = data.items;
         setReady(true);
-        board(appEl, boardCache);
+        appEl.innerHTML = board({ items: boardCache });
         wireBoardControls();
       } catch (e) {
         showError(e.message, renderBoard);
@@ -142,7 +142,7 @@ function applyBoardFilters() {
     }
   }
   setReady(true);
-  board(appEl, items);
+  appEl.innerHTML = board({ items });
   wireBoardControls();
 }
 
@@ -152,7 +152,7 @@ async function renderBounty(slug) {
     const data = await getBounty(slug);
     setReady(true);
     document.title = data.title || 'Bounty';
-    bounty(appEl, data);
+    appEl.innerHTML = bounty(data);
   } catch (e) {
     showError(e.message, () => renderBounty(slug));
   }
@@ -164,7 +164,7 @@ async function renderLeaderboard(slug) {
     const data = await getLeaderboard(slug);
     setReady(true);
     document.title = 'Leaderboard';
-    leaderboard(appEl, slug, data);
+    appEl.innerHTML = leaderboard(slug, data);
   } catch (e) {
     showError(e.message, () => renderLeaderboard(slug));
   }
@@ -176,7 +176,7 @@ async function renderProfile(handle) {
     const data = await getProfile(handle);
     setReady(true);
     document.title = handle;
-    profile(appEl, handle, data);
+    appEl.innerHTML = profile(handle, data);
   } catch (e) {
     showError(e.message, () => renderProfile(handle));
   }
