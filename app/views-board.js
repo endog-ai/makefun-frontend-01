@@ -64,10 +64,11 @@ export function bounty(b) {
     : `${status} — entries closed`;
   const deadlineText = `${date(deadline)} (${timeLeft(deadline)})`;
 
-  const rewardsList = (rewardsNow && rewardsNow.length) ? rewardsNow : rewards;
+  const rewardsList = (rewardsNow && rewardsNow.length) ? rewardsNow : (rewards ? Object.entries(rewards).map(([place, amount]) => ({ place: Number(place), amount })) : []);
   const rewardsRows = rewardsList.map(r => {
     const amount = r.amountUsd ?? r.amount;
-    return `<tr><td>${esc(r.title || r.name || '')}</td><td>${money(amount)}</td></tr>`;
+    const label = r.title || r.name || (r.place ? 'Place ' + r.place : '');
+    return `<tr><td>${esc(label)}</td><td>${money(amount)}</td></tr>`;
   }).join('');
 
   return `
