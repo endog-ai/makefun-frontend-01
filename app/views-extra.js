@@ -4,13 +4,15 @@ import { esc, money, date } from './format.js';
 export function leaderboard(slug, data) {
   const backLink = `<a href="#/bounty/${esc(slug)}">Back</a>`;
   const rows = data.entries.map(entry => {
-    const winRate = (entry.values.judge / 1000000).toFixed(4);
+    const fmt = v => (v / 1000000).toFixed(6);
+    const winRate = fmt(entry.values.judge);
+    const winInterval = `${fmt(entry.values.judge_low ?? entry.values.judge)} – ${fmt(entry.values.judge_high ?? entry.values.judge)}`;
     const size = `${entry.values.bytes} bytes`;
     return `<tr>
       <td>${esc(entry.rank.toString())}</td>
       <td><a href="#/u/${esc(entry.handle)}">${esc(entry.handle)}</a></td>
       <td>${esc(entry.title)}</td>
-      <td>${esc(winRate)}</td>
+      <td>${esc(winRate)} (${esc(winInterval)})</td>
       <td>${esc(size)}</td>
     </tr>`;
   }).join('\n');
@@ -19,7 +21,7 @@ export function leaderboard(slug, data) {
     <h1>Leaderboard</h1>
     <table>
       <thead>
-        <tr><th>Rank</th><th>Entrant</th><th>Entry title</th><th>Win rate</th><th>Size</th></tr>
+        <tr><th>Rank</th><th>Entrant</th><th>Entry title</th><th>Win rate (90% interval)</th><th>Size</th></tr>
       </thead>
       <tbody>
         ${rows}
